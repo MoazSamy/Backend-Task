@@ -88,6 +88,7 @@ This structure has 2 main folders:
 #### GET /api/v1/
 * Returns a list of tasks.
 * Sample: `curl http://127.0.0.1:8000/api/v1/`
+```
       [{
         "id":1,
         "state":"ARCH",
@@ -108,34 +109,45 @@ This structure has 2 main folders:
         "state":"ARCH",
         "title":"Chores"
       }]
-      
+```
+
 #### GET /api/v1/<task_id>
 * Returns a single task by id.
+* Returns a 404:NOT_FOUND if the id doesn't exist.
 * Sample: `curl http://127.0.0.1:5000/api/v1/1/`
+```
       {
       "id":1,
       "state":"ARCH",
       "title":"Work"
       }
+```
 
 #### DELETE /api/v1/<task_id>
 * Deletes an existing task using its id.
 
 #### GET /api/v1/<task_id>/advance
 * Advances the task to the next stage of progress, using its id.
+* This returns a 400:BAD_REQUEST if the task is already archived and can't progress any further.
+```
       {
       "id":3,
       "state":"DN",
       "title":"Chores"
       }
-      
+```
+
 ### GET /api/tasks/<task_id>/archive
 * Advances the task to the archived state, using its id.
+* This returns a 400:BAD_REQUEST if the task is already archived.
+```
       {
       "id":3,
       "state":"ARCH",
       "title":"Chores"
       }
+```
+
 ### Error handling
 The API returns a couple of error messages for invalid action, or for inexistent task:
 * `400`: Bad Request
